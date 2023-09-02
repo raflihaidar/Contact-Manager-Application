@@ -2,6 +2,7 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import {
   detailContact,
+  editContact,
   removeData,
   saveContact,
   showList,
@@ -24,7 +25,6 @@ yargs(hideBin(process.argv))
       },
       email: {
         describe: "Email",
-        default: "undefined",
         demandOption: false,
         type: "string",
       },
@@ -35,7 +35,7 @@ yargs(hideBin(process.argv))
   })
   .command({
     command: "remove",
-    describe: "Add new contact",
+    describe: "Remove contact",
     builder: {
       name: {
         describe: "name",
@@ -66,6 +66,25 @@ yargs(hideBin(process.argv))
     },
     handler(argv) {
       detailContact(argv.name);
+    },
+  })
+  .command({
+    command: "edit",
+    describe: "Edit contact",
+    builder: {
+      prop: {
+        describe: "property",
+        demandOption: true,
+        type: "string",
+      },
+      value: {
+        describe: "value",
+        demandOption: true,
+        type: "string",
+      },
+    },
+    handler(argv) {
+      editContact(argv.prop, argv.value);
     },
   })
   .demandCommand()

@@ -1,5 +1,6 @@
 import chalk from "chalk";
 import fs from "fs";
+import rl from "readline";
 
 const dirPath = "./data";
 const dataPath = "./data/contact.json";
@@ -86,4 +87,18 @@ export const detailContact = (name) => {
   console.log("Nama \t\t: ", contacts[id].name);
   console.log("Telephone \t: ", contacts[id].telephone);
   console.log("Email \t\t: ", contacts[id].email + "\n\n");
+};
+
+export const editContact = (prop, value) => {
+  const contacts = loadData();
+
+  contacts.forEach((item) => {
+    if (!item.hasOwnProperty(prop)) {
+      item[prop] = value;
+      fs.writeFileSync("./data/contact.json", JSON.stringify(contacts));
+      console.log(chalk.green.inverse("succes"));
+    } else {
+      console.log(chalk.red.inverse("Error"));
+    }
+  });
 };
